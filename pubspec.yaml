@@ -1,0 +1,14 @@
+name: jotform
+description: Jotform API
+version: 1.0.0
+repository: https://github.com/ArcaneArts/jotform
+environment:
+  sdk: ^3.5.4
+dependencies:
+  dart_mappable: ^4.3.0
+  http: ^1.2.2
+dev_dependencies:
+  build_runner: ^2.4.13
+  dart_mappable_builder: ^4.3.0
+scripts: 
+  build_runner: dart pub run build_runner build
