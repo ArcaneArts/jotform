@@ -134,3 +134,49 @@ class LiteralJsonStringHook<T> extends MappingHook {
     return value;
   }
 }
+
+class LiteralJsonListJsonMapHook extends MappingHook {
+  const LiteralJsonListJsonMapHook();
+
+  @override
+  Object? beforeDecode(Object? value) {
+    if (value is String) {
+      return (jsonDecode(value) as List<dynamic>)
+          .whereType<Map<String, dynamic>>();
+    }
+
+    return value;
+  }
+
+  @override
+  Object? beforeEncode(Object? value) {
+    if (value is List<Map<String, dynamic>>) {
+      return jsonEncode(value);
+    }
+
+    return value;
+  }
+}
+
+class LiteralJsonStringStringMapHook extends MappingHook {
+  const LiteralJsonStringStringMapHook();
+
+  @override
+  Object? beforeDecode(Object? value) {
+    if (value is String) {
+      return (jsonDecode(value) as Map<String, dynamic>)
+          .map((k, v) => MapEntry(k, v.toString()));
+    }
+
+    return value;
+  }
+
+  @override
+  Object? beforeEncode(Object? value) {
+    if (value is Map<String, String>) {
+      return jsonEncode(value);
+    }
+
+    return value;
+  }
+}

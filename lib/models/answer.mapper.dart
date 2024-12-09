@@ -13,6 +13,7 @@ class JotformAnswerMapper extends ClassMapperBase<JotformAnswer> {
   static JotformAnswerMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = JotformAnswerMapper._());
+      JotformAnswerTypeMapper.ensureInitialized();
     }
     return _instance!;
   }
@@ -27,8 +28,9 @@ class JotformAnswerMapper extends ClassMapperBase<JotformAnswer> {
       Field('order', _$order, hook: StringIntHook());
   static String _$text(JotformAnswer v) => v.text;
   static const Field<JotformAnswer, String> _f$text = Field('text', _$text);
-  static String _$type(JotformAnswer v) => v.type;
-  static const Field<JotformAnswer, String> _f$type = Field('type', _$type);
+  static JotformAnswerType _$type(JotformAnswer v) => v.type;
+  static const Field<JotformAnswer, JotformAnswerType> _f$type =
+      Field('type', _$type);
   static String? _$timeFormat(JotformAnswer v) => v.timeFormat;
   static const Field<JotformAnswer, String> _f$timeFormat =
       Field('timeFormat', _$timeFormat, opt: true);
@@ -44,11 +46,11 @@ class JotformAnswerMapper extends ClassMapperBase<JotformAnswer> {
       opt: true, hook: StringListStringHook());
   static List<Map<String, dynamic>>? _$dcolumns(JotformAnswer v) => v.dcolumns;
   static const Field<JotformAnswer, List<Map<String, dynamic>>> _f$dcolumns =
-      Field('dcolumns', _$dcolumns, opt: true, hook: LiteralJsonStringHook());
+      Field('dcolumns', _$dcolumns,
+          opt: true, hook: LiteralJsonListJsonMapHook());
   static List<Map<String, dynamic>>? _$drows(JotformAnswer v) => v.drows;
   static const Field<JotformAnswer, List<Map<String, dynamic>>> _f$drows =
-      Field('drows', _$drows,
-          opt: true, hook: LiteralJsonStringHook<List<Map<String, dynamic>>>());
+      Field('drows', _$drows, opt: true, hook: LiteralJsonListJsonMapHook());
   static List<String>? _$mcolumns(JotformAnswer v) => v.mcolumns;
   static const Field<JotformAnswer, List<String>> _f$mcolumns =
       Field('mcolumns', _$mcolumns, opt: true, hook: StringListBarStringHook());
@@ -71,10 +73,10 @@ class JotformAnswerMapper extends ClassMapperBase<JotformAnswer> {
   static List<Map<String, dynamic>>? _$products(JotformAnswer v) => v.products;
   static const Field<JotformAnswer, List<Map<String, dynamic>>> _f$products =
       Field('products', _$products, opt: true);
-  static Map<String, String> _$sublabels(JotformAnswer v) => v.sublabels;
+  static Map<String, String>? _$sublabels(JotformAnswer v) => v.sublabels;
   static const Field<JotformAnswer, Map<String, String>> _f$sublabels = Field(
       'sublabels', _$sublabels,
-      hook: LiteralJsonStringHook<Map<String, String>>());
+      opt: true, hook: LiteralJsonStringStringMapHook());
   static dynamic _$answer(JotformAnswer v) => v.answer;
   static const Field<JotformAnswer, dynamic> _f$answer =
       Field('answer', _$answer);
@@ -198,13 +200,13 @@ abstract class JotformAnswerCopyWith<$R, $In extends JotformAnswer, $Out>
   ListCopyWith<$R, Map<String, dynamic>,
           ObjectCopyWith<$R, Map<String, dynamic>, Map<String, dynamic>>>?
       get products;
-  MapCopyWith<$R, String, String, ObjectCopyWith<$R, String, String>>
+  MapCopyWith<$R, String, String, ObjectCopyWith<$R, String, String>>?
       get sublabels;
   $R call(
       {String? name,
       int? order,
       String? text,
-      String? type,
+      JotformAnswerType? type,
       String? timeFormat,
       String? inputType,
       int? emojiCount,
@@ -300,15 +302,19 @@ class _JotformAnswerCopyWithImpl<$R, $Out>
               (v) => call(products: v))
           : null;
   @override
-  MapCopyWith<$R, String, String, ObjectCopyWith<$R, String, String>>
-      get sublabels => MapCopyWith($value.sublabels,
-          (v, t) => ObjectCopyWith(v, $identity, t), (v) => call(sublabels: v));
+  MapCopyWith<$R, String, String, ObjectCopyWith<$R, String, String>>?
+      get sublabels => $value.sublabels != null
+          ? MapCopyWith(
+              $value.sublabels!,
+              (v, t) => ObjectCopyWith(v, $identity, t),
+              (v) => call(sublabels: v))
+          : null;
   @override
   $R call(
           {String? name,
           int? order,
           String? text,
-          String? type,
+          JotformAnswerType? type,
           Object? timeFormat = $none,
           Object? inputType = $none,
           Object? emojiCount = $none,
@@ -322,7 +328,7 @@ class _JotformAnswerCopyWithImpl<$R, $Out>
           Object? rowIds = $none,
           Object? scaleAmount = $none,
           Object? products = $none,
-          Map<String, String>? sublabels,
+          Object? sublabels = $none,
           Object? answer = $none,
           Object? prettyFormat = $none}) =>
       $apply(FieldCopyWithData({
@@ -343,7 +349,7 @@ class _JotformAnswerCopyWithImpl<$R, $Out>
         if (rowIds != $none) #rowIds: rowIds,
         if (scaleAmount != $none) #scaleAmount: scaleAmount,
         if (products != $none) #products: products,
-        if (sublabels != null) #sublabels: sublabels,
+        if (sublabels != $none) #sublabels: sublabels,
         if (answer != $none) #answer: answer,
         if (prettyFormat != $none) #prettyFormat: prettyFormat
       }));

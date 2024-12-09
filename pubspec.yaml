@@ -1,9 +1,9 @@
 name: jotform
 description: Jotform API
-version: 1.0.0
+version: 1.0.1
 repository: https://github.com/ArcaneArts/jotform
 environment:
-  sdk: ^3.5.4
+  sdk: ^3.5.2
 dependencies:
   dart_mappable: ^4.3.0
   http: ^1.2.2

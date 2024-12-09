@@ -1,5 +1,6 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:jotform/hooks.dart';
+import 'package:jotform/models/answer_type.dart';
 
 part 'answer.mapper.dart';
 
@@ -26,10 +27,10 @@ class JotformAnswer with JotformAnswerMappable {
   @MappableField(hook: StringListBarStringHook())
   final List<String>? toggleText;
 
-  @MappableField(hook: LiteralJsonStringHook())
+  @MappableField(hook: LiteralJsonListJsonMapHook())
   final List<Map<String, dynamic>>? dcolumns;
 
-  @MappableField(hook: LiteralJsonStringHook<List<Map<String, dynamic>>>())
+  @MappableField(hook: LiteralJsonListJsonMapHook())
   final List<Map<String, dynamic>>? drows;
 
   @MappableField(hook: StringIntListHook())
@@ -38,12 +39,12 @@ class JotformAnswer with JotformAnswerMappable {
   @MappableField(hook: StringIntListHook())
   final List<int>? rowIds;
 
-  @MappableField(hook: LiteralJsonStringHook<Map<String, String>>())
-  final Map<String, String> sublabels;
+  @MappableField(hook: LiteralJsonStringStringMapHook())
+  final Map<String, String>? sublabels;
 
   final String name;
   final String text;
-  final String type; // TODO: enum
+  final JotformAnswerType type;
   final String? timeFormat;
   final String? inputType;
   final List<Map<String, dynamic>>? products;
@@ -68,7 +69,7 @@ class JotformAnswer with JotformAnswerMappable {
     this.rowIds,
     this.scaleAmount,
     this.products,
-    required this.sublabels,
+    this.sublabels,
     required this.answer,
     this.prettyFormat,
   });
