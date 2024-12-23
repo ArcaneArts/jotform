@@ -43,8 +43,8 @@ class JotformSubmissionMapper extends ClassMapperBase<JotformSubmission> {
   static String _$notes(JotformSubmission v) => v.notes;
   static const Field<JotformSubmission, String> _f$notes =
       Field('notes', _$notes);
-  static Map<int, JotformAnswer> _$answers(JotformSubmission v) => v.answers;
-  static const Field<JotformSubmission, Map<int, JotformAnswer>> _f$answers =
+  static Map<String, JotformAnswer> _$answers(JotformSubmission v) => v.answers;
+  static const Field<JotformSubmission, Map<String, JotformAnswer>> _f$answers =
       Field('answers', _$answers, opt: true, def: const {});
   static DateTime? _$updatedAt(JotformSubmission v) => v.updatedAt;
   static const Field<JotformSubmission, DateTime> _f$updatedAt =
@@ -133,7 +133,7 @@ extension JotformSubmissionValueCopy<$R, $Out>
 
 abstract class JotformSubmissionCopyWith<$R, $In extends JotformSubmission,
     $Out> implements ClassCopyWith<$R, $In, $Out> {
-  MapCopyWith<$R, int, JotformAnswer,
+  MapCopyWith<$R, String, JotformAnswer,
       JotformAnswerCopyWith<$R, JotformAnswer, JotformAnswer>> get answers;
   $R call(
       {String? id,
@@ -144,7 +144,7 @@ abstract class JotformSubmissionCopyWith<$R, $In extends JotformSubmission,
       bool? nNew,
       String? flag,
       String? notes,
-      Map<int, JotformAnswer>? answers,
+      Map<String, JotformAnswer>? answers,
       DateTime? updatedAt});
   JotformSubmissionCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
       Then<$Out2, $R2> t);
@@ -159,7 +159,7 @@ class _JotformSubmissionCopyWithImpl<$R, $Out>
   late final ClassMapperBase<JotformSubmission> $mapper =
       JotformSubmissionMapper.ensureInitialized();
   @override
-  MapCopyWith<$R, int, JotformAnswer,
+  MapCopyWith<$R, String, JotformAnswer,
           JotformAnswerCopyWith<$R, JotformAnswer, JotformAnswer>>
       get answers => MapCopyWith($value.answers, (v, t) => v.copyWith.$chain(t),
           (v) => call(answers: v));
@@ -173,7 +173,7 @@ class _JotformSubmissionCopyWithImpl<$R, $Out>
           bool? nNew,
           String? flag,
           String? notes,
-          Map<int, JotformAnswer>? answers,
+          Map<String, JotformAnswer>? answers,
           Object? updatedAt = $none}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,

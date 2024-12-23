@@ -74,7 +74,7 @@ class StringListStringHook extends MappingHook {
   @override
   Object? beforeDecode(Object? value) {
     if (value is String) {
-      List<dynamic> data = jsonDecode(value);
+      List<dynamic> data = jsonDecode(value.replaceAll("\\", ""));
       return data.map((e) => e.toString()).toList();
     }
 
@@ -119,7 +119,7 @@ class LiteralJsonStringHook<T> extends MappingHook {
   @override
   Object? beforeDecode(Object? value) {
     if (value is String) {
-      return jsonDecode(value) as T;
+      return jsonDecode(value.replaceAll("\\", "")) as T;
     }
 
     return value;

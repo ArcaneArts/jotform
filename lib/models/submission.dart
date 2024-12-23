@@ -12,7 +12,7 @@ class JotformSubmission with JotformSubmissionMappable {
   final JotformSubmissionStatus status;
   final String flag;
   final String notes;
-  final Map<int, JotformAnswer> answers;
+  final Map<String, JotformAnswer> answers;
 
   @MappableField(key: 'created_at')
   final DateTime createdAt;

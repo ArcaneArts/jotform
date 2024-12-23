@@ -30,8 +30,6 @@ class JotformAPI {
       if (orderBy != null) "orderBy": orderBy.name.replaceAll("_", "")
     }))
         .then((value) {
-      print(value.body);
-
       Map<String, dynamic> body = jsonDecode(value.body);
       if (body["limit-left"] is int) {
         limitLeft = body["limit-left"];
