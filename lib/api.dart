@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:jotform/models/form.dart';
+import 'package:jotform/models/question.dart';
 import 'package:jotform/models/submission.dart';
 
 class JotformAPI {
@@ -38,6 +39,23 @@ class JotformAPI {
           .whereType<Map<String, dynamic>>()
           .map((i) => JotformFormMapper.fromMap(i)));
     });
+  }
+
+  Stream<JotformQuestion> getQuestions(String form) async* {
+    Map<String, dynamic> g = await http
+        .get(getUrl("form/$form/questions", params: {}))
+        .then((value) {
+      Map<String, dynamic> body = jsonDecode(value.body);
+      if (body["limit-left"] is int) {
+        limitLeft = body["limit-left"];
+      }
+
+      return body["content"] as Map<String, dynamic>;
+    });
+
+    for (dynamic i in g.values) {
+      yield JotformQuestionMapper.fromMap(i);
+    }
   }
 
   Stream<JotformSubmission> getSubmissions(String id,
