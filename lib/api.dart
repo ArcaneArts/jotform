@@ -17,6 +17,18 @@ class JotformAPI {
         queryParameters: {...params, "apiKey": apiKey},
       );
 
+  Future<JotformForm> getForm(String formId) async {
+    return await http.get(getUrl("form/$formId", params: {})).then((value) {
+      Map<String, dynamic> body = jsonDecode(value.body);
+      if (body["limit-left"] is int) {
+        limitLeft = body["limit-left"];
+      }
+
+      return JotformFormMapper.fromMap(
+          (body["content"] as List<dynamic>).first as Map<String, dynamic>);
+    });
+  }
+
   Stream<JotformForm> getForms({
     int offset = 0,
     int limit = 20,
