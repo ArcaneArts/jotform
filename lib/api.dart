@@ -1,9 +1,8 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:jotform/models/form.dart';
+import 'package:jotform/jotform.dart';
 import 'package:jotform/models/question.dart';
-import 'package:jotform/models/submission.dart';
 
 class JotformAPI {
   final String apiKey;
@@ -17,14 +16,35 @@ class JotformAPI {
         queryParameters: {...params, "apiKey": apiKey},
       );
 
-  Future<JotformForm> getForm(String formId) async {
-    return await http.get(getUrl("form/$formId", params: {})).then((value) {
+  Future<Map<int, JotformAnswer>> getFormQuestions(String formId) async {
+    return await http
+        .get(getUrl("form/$formId/questions", params: {}))
+        .then((value) {
       Map<String, dynamic> body = jsonDecode(value.body);
       if (body["limit-left"] is int) {
         limitLeft = body["limit-left"];
       }
 
-      return JotformFormMapper.fromMap(body["content"] as Map<String, dynamic>);
+      return Map.fromEntries((body["content"] as Map<String, dynamic>)
+          .entries
+          .map((v) => MapEntry(int.parse(v.key),
+              JotformAnswerMapper.fromMap(v.value as Map<String, dynamic>))));
+    });
+  }
+
+  Future<JotformForm> getForm(String formId) async {
+    return await http
+        .get(getUrl("form/$formId", params: {}))
+        .then((value) async {
+      Map<String, dynamic> body = jsonDecode(value.body);
+      if (body["limit-left"] is int) {
+        limitLeft = body["limit-left"];
+      }
+
+      return JotformFormMapper.fromMap(body["content"] as Map<String, dynamic>)
+          .copyWith(
+        answers: await getFormQuestions(formId),
+      );
     });
   }
 
