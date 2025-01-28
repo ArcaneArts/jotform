@@ -59,7 +59,7 @@ class JotformForm with JotformFormMappable {
     required this.favorite,
     required this.archived,
     required this.url,
-    required this.hasPayment,
+    this.hasPayment = false,
     this.paymentProps,
   });
 }

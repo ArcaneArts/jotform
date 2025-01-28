@@ -1,6 +1,6 @@
 name: jotform
 description: Jotform API
-version: 1.0.6
+version: 1.0.8
 repository: https://github.com/ArcaneArts/jotform
 environment:
   sdk: ^3.5.2

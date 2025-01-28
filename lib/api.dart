@@ -24,8 +24,7 @@ class JotformAPI {
         limitLeft = body["limit-left"];
       }
 
-      return JotformFormMapper.fromMap(
-          (body["content"] as List<dynamic>).first as Map<String, dynamic>);
+      return JotformFormMapper.fromMap(body["content"] as Map<String, dynamic>);
     });
   }
 
@@ -68,6 +67,19 @@ class JotformAPI {
     for (dynamic i in g.values) {
       yield JotformQuestionMapper.fromMap(i);
     }
+  }
+
+  Future<JotformSubmission> getSubmission(String submissionId) async {
+    http.Response response =
+        await http.get(getUrl("submission/$submissionId", params: {}));
+    Map<String, dynamic> body = jsonDecode(response.body);
+
+    if (body["limit-left"] is int) {
+      limitLeft = body["limit-left"];
+    }
+
+    return JotformSubmissionMapper.fromMap(
+        body["content"] as Map<String, dynamic>);
   }
 
   Stream<JotformSubmission> getSubmissions(String id,
