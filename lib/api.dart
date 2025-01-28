@@ -25,10 +25,13 @@ class JotformAPI {
         limitLeft = body["limit-left"];
       }
 
-      return Map.fromEntries((body["content"] as Map<String, dynamic>)
-          .entries
-          .map((v) => MapEntry(int.parse(v.key),
-              JotformAnswerMapper.fromMap(v.value as Map<String, dynamic>))));
+      return Map.fromEntries(
+          (body["content"] as Map<String, dynamic>).entries.map((v) {
+        print("Value is ${v.value.runtimeType} or ${v.value}");
+
+        return MapEntry(int.parse(v.key),
+            JotformAnswerMapper.fromMap(v.value as Map<String, dynamic>));
+      }));
     });
   }
 
