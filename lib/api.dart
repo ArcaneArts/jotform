@@ -43,7 +43,7 @@ class JotformAPI {
 
       return JotformFormMapper.fromMap(body["content"] as Map<String, dynamic>)
           .copyWith(
-        answers: await getFormQuestions(formId),
+        answers: {...await getFormQuestions(formId)},
       );
     });
   }
