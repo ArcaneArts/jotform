@@ -20,6 +20,8 @@ class JotformAPI {
     return await http
         .get(getUrl("form/$formId/questions", params: {}))
         .then((value) {
+      print(value.body);
+
       Map<String, dynamic> body = jsonDecode(value.body);
       if (body["limit-left"] is int) {
         limitLeft = body["limit-left"];
