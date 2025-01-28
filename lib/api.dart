@@ -20,8 +20,6 @@ class JotformAPI {
     return await http
         .get(getUrl("form/$formId/questions", params: {}))
         .then((value) {
-      print(value.body);
-
       Map<String, dynamic> body = jsonDecode(value.body);
       if (body["limit-left"] is int) {
         limitLeft = body["limit-left"];
@@ -29,6 +27,7 @@ class JotformAPI {
 
       return Map.fromEntries(
           (body["content"] as Map<String, dynamic>).entries.map((v) {
+        print("Key: ${v.key}");
         return MapEntry(
             int.parse(v.key), JotformAnswerMapper.fromMap(_fixMap(v.value)));
       }));
