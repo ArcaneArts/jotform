@@ -69,7 +69,7 @@ class JotformFormMapper extends ClassMapperBase<JotformForm> {
   static const Field<JotformForm, String> _f$url = Field('url', _$url);
   static bool _$hasPayment(JotformForm v) => v.hasPayment;
   static const Field<JotformForm, bool> _f$hasPayment =
-      Field('hasPayment', _$hasPayment);
+      Field('hasPayment', _$hasPayment, opt: true, def: false);
   static JotformFormPaymentProps? _$paymentProps(JotformForm v) =>
       v.paymentProps;
   static const Field<JotformForm, JotformFormPaymentProps> _f$paymentProps =
