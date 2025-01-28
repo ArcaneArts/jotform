@@ -27,14 +27,43 @@ class JotformAPI {
 
       return Map.fromEntries(
           (body["content"] as Map<String, dynamic>).entries.map((v) {
-        print("Value is ${v.value.runtimeType} or ${v.value}");
-        print(jsonEncode(Map.of(v.value as Map<String, dynamic>)));
         return MapEntry(
-            int.parse(v.key),
-            JotformAnswerMapper.fromMap(
-                Map.of(v.value as Map<String, dynamic>)));
+            int.parse(v.key), JotformAnswerMapper.fromMap(_fixMap(v.value)));
       }));
     });
+  }
+
+  List<dynamic> _fixList(List<dynamic> list) {
+    List<dynamic> roll = [];
+
+    for (dynamic i in list) {
+      if (i is Map<String, dynamic>) {
+        roll.add(_fixMap(i));
+      } else if (i is List<dynamic>) {
+        roll.add(_fixList(i));
+      } else {
+        roll.add(i);
+      }
+    }
+
+    return roll;
+  }
+
+  Map<String, dynamic> _fixMap(Map<String, dynamic> map) {
+    Map<String, dynamic> roll = {};
+
+    for (String i in map.keys) {
+      dynamic v = map[i];
+      if (v is Map<String, dynamic>) {
+        roll[i] = _fixMap(v);
+      } else if (v is List<dynamic>) {
+        roll[i] = _fixList(v);
+      } else {
+        roll[i] = v;
+      }
+    }
+
+    return roll;
   }
 
   Future<JotformForm> getForm(String formId) async {
