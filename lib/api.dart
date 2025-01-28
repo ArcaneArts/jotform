@@ -27,7 +27,6 @@ class JotformAPI {
 
       return Map.fromEntries(
           (body["content"] as Map<String, dynamic>).entries.map((v) {
-        print("Key: ${v.key}");
         return MapEntry(
             int.parse(v.key), JotformAnswerMapper.fromMap(_fixMap(v.value)));
       }));
