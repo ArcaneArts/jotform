@@ -27,10 +27,8 @@ class JotformAPI {
 
       return Map.fromEntries(
           (body["content"] as Map<String, dynamic>).entries.map((v) {
-        print("Value is ${v.value.runtimeType} or ${v.value}");
-
         return MapEntry(int.parse(v.key),
-            JotformAnswerMapper.fromMap(v.value as Map<String, dynamic>));
+            JotformAnswerMapper.fromMap({...v.value as Map<String, dynamic>}));
       }));
     });
   }
